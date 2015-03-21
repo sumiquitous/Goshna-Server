@@ -44,6 +44,29 @@ def get_airport(airport_id):
         abort(404)
     return jsonify({'airport': airport[0]})
 
+@app.route('/goshna/api/airports/<int:airport_id>', methods=['PUT'])
+def update_airport(airport_id):
+    airport = [airport for airport in airports if airport['id'] == airport_id]
+    if len(airport) == 0:
+        abort(404)
+    if not request.json:
+        abort(400)
+    if 'name' in request.json and type(request.json['name']) != unicode:
+        abort(400)
+    if 'code' in request.json and type(request.json['code']) != unicode:
+        abort(400)
+    airport[0]['name'] = request.json.get('name', airport[0]['name'])
+    airport[0]['code'] = request.json.get('code', airport[0]['code'])
+    return jsonify({'airport': airport[0]})
+
+@app.route('/goshna/api/airports/<int:airport_id>', methods=['DELETE'])
+def delete_airport(airport_id):
+    airport = [airport for airport in airports if airport['id'] == airport_id]
+    if len(airport) == 0:
+        abort(404)
+    airports.remove(airport[0])
+    return jsonify({'result': True})
+
 @app.errorhandler(404)
 def not_found(error):
     return make_response(jsonify({'error': 'Not found'}), 404)
