@@ -32,7 +32,7 @@ end
 # unset irrelevant variables
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/home/tick/Git/Goshna-Server/goshna-server-api/flask"
+set -gx VIRTUAL_ENV "/root/Git/Goshna-Server/goshna/flask"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH
