@@ -66,6 +66,6 @@ class Airport:
     @app.route('/goshna/api/airports/<int:airport_id>', methods=['DELETE'])
     def delete_airport(airport_id):
         ApiFunctions.post_db("DELETE FROM airports WHERE id=?", [airport_id])
-		print u'Deleted airport with ID ' + str(inserted_id)
+        print u'Deleted airport with ID ' + str(inserted_id)
         return jsonify({'result': True})
 
