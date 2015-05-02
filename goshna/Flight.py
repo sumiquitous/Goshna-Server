@@ -44,14 +44,36 @@ class Flight:
 
     @app.route('/goshna/api/flights/find', methods=['POST'])
     def find_flights():
-        if not request.json or not 'airline_id' in request.json or not 'airport_id' in request.json:
-            abort(400)
+        airline_id = 0
+        airport_id = 0
 
-        airline_id = request.json['airline_id']
-        airport_id = request.json['airport_id']
+        if request.json and 'airline_id' in request.json:
+            airline_id = request.json['airline_id']
+
+        if request.json and 'airport_id' in request.json:
+            airport_id = request.json['airport_id']
 
         flights = []
-        results = ApiFunctions.query_db("SELECT * FROM flights")
+
+        if(airline_id == 0):
+
+            # Airport and Airline are 'ALL'
+            if(airport_id == 0):
+                results = ApiFunctions.query_db("SELECT * FROM flights", [])
+
+            # Airline is 'ALL'
+            else:
+                results = ApiFunctions.query_db("SELECT * FROM flights where source_airport_id=?", [airport_id])
+
+        # Airport is 'ALL'
+        elif(airport_id == 0):
+            results = ApiFunctions.query_db("SELECT * FROM flights where airline_id=?", [airline_id])
+
+        # Neither is 'ALL'
+        else:
+            results = ApiFunctions.query_db("SELECT * FROM flights where airline_id=? and source_airport_id=?", [airline_id, airport_id])
+
+
         for row in results:
             airline = ApiFunctions.query_db("SELECT * FROM airlines WHERE id = ?", [row['airline_id']], one=True)
             dest_airport = ApiFunctions.query_db("SELECT * FROM airports WHERE id = ?", [row['dest_airport_id']], one=True)
