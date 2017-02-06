@@ -1,1 +1,1 @@
-PYTHONPATH=~/Git/Goshna-Server/ ./app.py
+PYTHONPATH=../ ./app.py
