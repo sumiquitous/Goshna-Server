@@ -1,0 +1,17 @@
+[Unit]
+Description=The Goshna Airport Announcement Service
+After=network-online.target
+
+[Service]
+Type=simple
+User=goshna
+Group=goshna
+WorkingDirectory=/home/goshna/Goshna-Server/goshna
+Environment=HOME=/home/goshna
+
+ExecStart=/bin/bash '/home/goshna/Goshna-Server/goshna/start.sh'
+
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
