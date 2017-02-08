@@ -1,9 +1,11 @@
 # This file is used to initialize global variables
 # Like the Flask app and database cursor
 from flask import Flask
+from flask_cors import CORS, cross_origin
 import sqlite3
 
 app = Flask(__name__)
+CORS(app)
 conn = sqlite3.connect('goshna.sqlite', check_same_thread=False)
 c = conn.cursor()
 
