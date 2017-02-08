@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, abort, request
 from goshna import *
 from goshna import ApiFunctions
+import time
 
 class Message:
     def __init__(self, id, text, time, flight_id):
@@ -43,7 +44,7 @@ class Message:
 			abort(400)
 
 		text = request.json['text']
-		time = request.json['time']
+		time =  time.time() #request.json['time']
 		airport_id = request.json['airport_id']
 		gate_id = request.json['gate_id']
 
